@@ -24,9 +24,9 @@
                 </div>
                 <div class="stat-row small">
                     <span>⭐ LVL <span id="level">1</span></span>
-                    <span>💪 ATK <span id="attack">10</span></span>
-                    <span>🛡️ DEF <span id="defense">5</span></span>
-                    <span>💨 SPD <span id="speed">5</span></span>
+                    <span>💪 ATK <span id="attack">15</span></span>
+                    <span>🛡️ DEF <span id="defense">8</span></span>
+                    <span>💨 SPD <span id="speed">10</span></span>
                     <span>📊 XP: <span id="xp">0</span>/<span id="xp-needed">100</span></span>
                 </div>
             </div>
@@ -38,6 +38,7 @@
             <div id="quest-panel">
                 <h3>📜 Active Quest</h3>
                 <div id="current-quest">Talk to Master Roshi</div>
+                <div id="quest-progress"></div>
             </div>
         </div>
         
@@ -49,18 +50,56 @@
         </div>
         
         <div id="combat-screen" class="hidden">
-            <div id="combat-enemy">
-                <div id="enemy-sprite"></div>
-                <div id="enemy-name"></div>
-                <div class="bar-container"><div id="enemy-hp-bar" class="bar"></div></div>
-                <span id="enemy-hp-text"></span>
+            <div id="combat-top">
+                <div id="player-stats">
+                    <div class="name">You</div>
+                    <div class="bar-container small"><div id="player-combat-hp" class="bar"></div></div>
+                    <span id="player-combat-hp-text"></span>
+                    <div class="combo-meter">
+                        <div>Combo: <span id="combo-count">0</span></div>
+                        <div>Special: <span id="special-meter">0</span>%</div>
+                    </div>
+                </div>
+                <div id="vs">VS</div>
+                <div id="combat-enemy">
+                    <div id="enemy-sprite"></div>
+                    <div id="enemy-name"></div>
+                    <div class="bar-container small"><div id="enemy-hp-bar" class="bar"></div></div>
+                    <span id="enemy-hp-text"></span>
+                </div>
             </div>
+            
+            <div id="combat-center">
+                <div id="combat-effects"></div>
+                <div id="combo-indicator" class="hidden">
+                    <div class="combo-text">COMBO WINDOW!</div>
+                    <div class="combo-buttons">
+                        <button data-combo="1">1: Dragon Rush</button>
+                        <button data-combo="2">2: Meteor Crash</button>
+                        <button data-combo="3">3: Meteor Strike</button>
+                    </div>
+                </div>
+                <div id="charge-indicator" class="hidden">
+                    <div>CHARGING KI... (Hold Q)</div>
+                    <div id="charge-bar"><div id="charge-fill"></div></div>
+                </div>
+            </div>
+            
             <div id="combat-log"></div>
+            
             <div id="combat-actions">
-                <button data-action="attack">👊 Attack</button>
-                <button data-action="ki">⚡ Ki Blast</button>
-                <button data-action="special">🌟 Special</button>
+                <button data-action="attack" class="primary">👊 Attack</button>
+                <button data-action="ki" class="mana">⚡ Ki Blast (10)</button>
+                <button data-action="special" class="ultimate">🌟 Special (100%)</button>
+                <button data-action="block">🛡️ Block</button>
+                <button data-action="dodge">💨 Dodge</button>
+                <button data-action="transform" class="transform hidden">🔥 Transform</button>
                 <button data-action="flee">🏃 Flee</button>
+            </div>
+            
+            <div class="combat-hints">
+                <span>[Q] Hold to charge Ki</span>
+                <span>[1-3] Combo during window</span>
             </div>
         </div>
         
@@ -80,8 +119,9 @@
         </div>
         
         <div id="game-over" class="hidden">
-            <h1>GAME OVER</h1>
+            <h1>💀 GAME OVER</h1>
             <p>Your journey has ended...</p>
+            <p id="final-stats"></p>
             <button id="restart-btn">🔄 Try Again</button>
         </div>
         
