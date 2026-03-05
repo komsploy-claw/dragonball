@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dragon Ball RPG</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        
+        <div id="ui-layer">
+            <div id="stats-panel">
+                <div class="stat-row">
+                    <span class="stat-label">❤️ HP:</span>
+                    <div class="bar-container"><div id="hp-bar" class="bar"></div></div>
+                    <span id="hp-text">100/100</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">⚡ Ki:</span>
+                    <div class="bar-container"><div id="ki-bar" class="bar"></div></div>
+                    <span id="ki-text">50/50</span>
+                </div>
+                <div class="stat-row small">
+                    <span>⭐ LVL <span id="level">1</span></span>
+                    <span>💪 ATK <span id="attack">10</span></span>
+                    <span>🛡️ DEF <span id="defense">5</span></span>
+                    <span>💨 SPD <span id="speed">5</span></span>
+                    <span>📊 XP: <span id="xp">0</span>/<span id="xp-needed">100</span></span>
+                </div>
+            </div>
+            
+            <div id="dragonballs">
+                <span>🐉 Dragon Balls: <span id="db-count">0</span>/7</span>
+            </div>
+            
+            <div id="quest-panel">
+                <h3>📜 Active Quest</h3>
+                <div id="current-quest">Talk to Master Roshi</div>
+            </div>
+        </div>
+        
+        <div id="dialogue-box" class="hidden">
+            <div id="dialogue-speaker"></div>
+            <div id="dialogue-text"></div>
+            <div id="dialogue-options"></div>
+            <span class="continue-hint">[SPACE to continue]</span>
+        </div>
+        
+        <div id="combat-screen" class="hidden">
+            <div id="combat-enemy">
+                <div id="enemy-sprite"></div>
+                <div id="enemy-name"></div>
+                <div class="bar-container"><div id="enemy-hp-bar" class="bar"></div></div>
+                <span id="enemy-hp-text"></span>
+            </div>
+            <div id="combat-log"></div>
+            <div id="combat-actions">
+                <button data-action="attack">👊 Attack</button>
+                <button data-action="ki">⚡ Ki Blast</button>
+                <button data-action="special">🌟 Special</button>
+                <button data-action="flee">🏃 Flee</button>
+            </div>
+        </div>
+        
+        <div id="inventory-screen" class="hidden">
+            <h2>🎒 Inventory</h2>
+            <div id="inventory-grid"></div>
+            <div id="item-details"></div>
+            <span class="close-hint">[I to close]</span>
+        </div>
+        
+        <div id="levelup-screen" class="hidden">
+            <h2>🎉 LEVEL UP!</h2>
+            <p>You reached level <span id="new-level"></span>!</p>
+            <p>Power Level: <span id="power-level"></span></p>
+            <div id="stat-bonuses"></div>
+            <span class="continue-hint">[SPACE to continue]</span>
+        </div>
+        
+        <div id="game-over" class="hidden">
+            <h1>GAME OVER</h1>
+            <p>Your journey has ended...</p>
+            <button id="restart-btn">🔄 Try Again</button>
+        </div>
+        
+        <div id="controls-hint">
+            WASD/Arrows: Move | SPACE: Interact | I: Inventory | K: Stats
+        </div>
+    </div>
+    
+    <script src="game.js"></script>
+</body>
+</html>

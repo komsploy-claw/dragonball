@@ -1,0 +1,443 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+body {
+    font-family: 'Press Start 2P', monospace;
+    background: #1a1a2e;
+    color: #fff;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+#game-container {
+    position: relative;
+    width: 800px;
+    height: 600px;
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    border: 4px solid #4a4a6a;
+}
+
+#gameCanvas {
+    display: block;
+    background: #87CEEB;
+    width: 100%;
+    height: 100%;
+}
+
+#ui-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Stats Panel */
+#stats-panel {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(0,0,0,0.85);
+    border: 3px solid #FFA500;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 10px;
+    min-width: 220px;
+}
+
+.stat-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+    gap: 8px;
+}
+
+.stat-row.small {
+    font-size: 8px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.stat-row.small span {
+    margin-right: 5px;
+}
+
+.stat-label {
+    width: 45px;
+    color: #FFA500;
+}
+
+.bar-container {
+    width: 100px;
+    height: 12px;
+    background: #333;
+    border: 2px solid #fff;
+    position: relative;
+}
+
+.bar {
+    height: 100%;
+    transition: width 0.3s;
+}
+
+#hp-bar { background: linear-gradient(90deg, #ff4444, #ff6666); }
+#ki-bar { background: linear-gradient(90deg, #4444ff, #6666ff); }
+
+#hp-text, #ki-text { font-size: 8px; width: 50px; }
+
+/* Dragon Balls */
+#dragonballs {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.85);
+    border: 3px solid #FFD700;
+    padding: 8px 12px;
+    font-size: 10px;
+    color: #FFD700;
+}
+
+/* Quest Panel */
+#quest-panel {
+    position: absolute;
+    bottom: 50px;
+    left: 10px;
+    background: rgba(0,0,0,0.85);
+    border: 3px solid #00FF00;
+    padding: 10px;
+    font-size: 9px;
+    max-width: 250px;
+}
+
+#quest-panel h3 {
+    color: #00FF00;
+    margin-bottom: 5px;
+    font-size: 10px;
+}
+
+#current-quest {
+    color: #fff;
+}
+
+/* Dialogue Box */
+#dialogue-box {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    background: rgba(0,0,0,0.95);
+    border: 4px solid #FFA500;
+    padding: 15px;
+    pointer-events: auto;
+}
+
+#dialogue-speaker {
+    color: #FFA500;
+    font-size: 10px;
+    margin-bottom: 10px;
+}
+
+#dialogue-text {
+    font-size: 10px;
+    line-height: 1.8;
+    min-height: 80px;
+}
+
+#dialogue-options {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#dialogue-options button {
+    background: #333;
+    border: 2px solid #FFA500;
+    color: #fff;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 9px;
+}
+
+#dialogue-options button:hover {
+    background: #FFA500;
+    color: #000;
+}
+
+.continue-hint {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    font-size: 8px;
+    color: #888;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* Combat Screen */
+#combat-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.95);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    pointer-events: auto;
+}
+
+#combat-enemy {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#enemy-sprite {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 15px;
+    border: 3px solid #fff;
+}
+
+#enemy-name {
+    font-size: 14px;
+    color: #ff4444;
+    margin-bottom: 10px;
+}
+
+#enemy-hp-bar {
+    background: linear-gradient(90deg, #ff4444, #ff6666);
+    width: 200px;
+}
+
+#combat-log {
+    background: rgba(255,255,255,0.1);
+    border: 2px solid #666;
+    width: 80%;
+    height: 120px;
+    padding: 10px;
+    font-size: 10px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+#combat-log p {
+    margin-bottom: 5px;
+    color: #ccc;
+}
+
+#combat-log p.damage { color: #ff6666; }
+#combat-log p.heal { color: #66ff66; }
+#combat-log p.critical { color: #ffff00; }
+
+#combat-actions {
+    display: flex;
+    gap: 15px;
+}
+
+#combat-actions button {
+    background: #333;
+    border: 3px solid #666;
+    color: #fff;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 10px;
+    transition: all 0.2s;
+}
+
+#combat-actions button:hover {
+    transform: scale(1.1);
+    border-color: #fff;
+}
+
+#combat-actions button[data-action="attack"] { border-color: #ff4444; }
+#combat-actions button[data-action="ki"] { border-color: #4444ff; }
+#combat-actions button[data-action="special"] { border-color: #ffff00; }
+
+/* Inventory Screen */
+#inventory-screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 400px;
+    background: rgba(0,0,0,0.95);
+    border: 4px solid #888;
+    padding: 20px;
+    pointer-events: auto;
+}
+
+#inventory-screen h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #FFA500;
+}
+
+#inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.inventory-slot {
+    width: 50px;
+    height: 50px;
+    background: #333;
+    border: 2px solid #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.inventory-slot:hover { border-color: #fff; }
+.inventory-slot.selected { border-color: #FFA500; }
+
+#item-details {
+    background: rgba(255,255,255,0.1);
+    padding: 10px;
+    font-size: 9px;
+    min-height: 80px;
+}
+
+.close-hint {
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    font-size: 8px;
+    color: #888;
+}
+
+/* Level Up Screen */
+#levelup-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.95);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    pointer-events: auto;
+}
+
+#levelup-screen h2 {
+    color: #FFD700;
+    font-size: 24px;
+    margin-bottom: 20px;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+#levelup-screen p {
+    font-size: 12px;
+    margin-bottom: 15px;
+}
+
+#stat-bonuses {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#stat-bonuses div {
+    color: #00FF00;
+    margin: 5px 0;
+    font-size: 11px;
+}
+
+/* Game Over */
+#game-over {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.95);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    pointer-events: auto;
+}
+
+#game-over h1 {
+    color: #ff4444;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+#game-over p {
+    margin-bottom: 30px;
+}
+
+#restart-btn {
+    background: #ff4444;
+    border: none;
+    color: #fff;
+    padding: 15px 30px;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#restart-btn:hover { background: #ff6666; }
+
+/* Controls Hint */
+#controls-hint {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 8px;
+    color: rgba(255,255,255,0.6);
+    background: rgba(0,0,0,0.7);
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+.hidden { display: none !important; }
+
+/* Damage popup animation */
+.damage-popup {
+    position: absolute;
+    font-size: 20px;
+    font-weight: bold;
+    animation: damageFloat 1s ease-out forwards;
+    pointer-events: none;
+}
+
+@keyframes damageFloat {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-50px); opacity: 0; }
+}
